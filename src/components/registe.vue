@@ -33,7 +33,7 @@
       <p class="inputpassword">
       <el-input v-model="password" type="password" placeholder="请输入密码"></el-input>
       </p>
-      <el-button @click="go" type="info" class="button1">注册</el-button>
+      <el-button @click="checkemail" type="info" class="button1">注册</el-button>
     </div>
   </div>
 </template>
@@ -61,9 +61,9 @@ export default {
         .then(res =>{
           console.log('通过邮箱验证')
           console.log(res.data)
-          if (res.data!=this.email){
+          if (res.data ==""){
             console.log('通过邮箱验证')
-            this.checktel();
+            this.checkusername();
           }
           else {
             alert('邮箱已存在')
@@ -89,29 +89,29 @@ export default {
          alert('密码不能为空')
       }
     },
-    //  checkusername(){
-    //   console.log('获取用户列表中...')
-    //   axios.get('/api/login/checkusername/'+this.username)
-    //     .then(res =>{
-    //       console.log(res.data)
-    //       if (res.data!=this.username){
-    //         console.log('通过用户名验证')
-    //         this.go();
-    //       }
-    //       else {
-    //         alert('用户名已存在')
-    //       }
-    //     })
-    //     .catch(e => {
-    //       console.log(e)})
-    //   console.log('获取用户列表完毕')
-    // },
+     checkusername(){
+      console.log('获取用户列表中...')
+      axios.get('/api/login/checkusername/'+this.username)
+        .then(res =>{
+          console.log(res.data)
+          if (res.data == ""){
+            console.log('通过用户名验证')
+            this.checktel();
+          }
+          else {
+            alert('用户名已存在')
+          }
+        })
+        .catch(e => {
+          console.log(e)})
+      console.log('获取用户列表完毕')
+    },
     checktel(){
       console.log('获取用户列表中...')
       axios.get('/api/login/checktel/'+this.tel)
         .then(res =>{
           console.log(res.data)
-          if (res.data!=this.tel){
+          if (res.data == ""){
             console.log('手机号码通过验证')
             this.go();
           }

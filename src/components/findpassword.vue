@@ -60,7 +60,7 @@
       > -->
       <el-button
       
-        @click="go"
+        @click="checktel"
         type="info"
         class="button1"
       >更改密码</el-button>
@@ -95,7 +95,7 @@ export default {
         axios.get('/api/login/checktel/'+this.tel)
         .then(res =>{
           console.log(res.data)
-          if (res.data==this.tel){
+          if (res.data != ""){
             console.log('手机号码存在')
             this.go();
           }
