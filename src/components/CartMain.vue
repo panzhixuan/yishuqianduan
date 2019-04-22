@@ -119,7 +119,7 @@ export default {
   
     getAllShoppingCars:function(){
       console.log('获取购物车列表中...')
-      axios.get('/api/ShoppingCar/getAllShoppingCars/'+this.userId)
+      axios.get('/api/shoppingcar/getAllShoppingCars/'+this.userId)
         .then(res =>{
           console.log(res.data)
           this.booklist=res.data

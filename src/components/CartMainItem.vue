@@ -5,14 +5,14 @@
         <img :src="content.image">
         <div class="check-name">
           <div class="name">
-            <el-checkbox class="check-box" v-model="content.checked" :label="content.name"  ></el-checkbox>
+            <el-checkbox class="check-box" v-model="content.checked" :label="content.bookName"  ></el-checkbox>
           </div>
         <div class="details">
-            <div class="book-author">作者：{{content.author}}</div>
-            <div class="book-version">版次：{{content.version}}</div>
-            <div class="book-upTime">加入时间：{{content.upTime}}</div>
-            <div class="book-shopName">店铺名称：{{content.shopName}}</div>
-            <div class="price">价格：{{content.price}}元</div>
+            <div class="book-author">作者：{{content.bookAuthor}}</div>
+            <div class="book-version">版次：{{content.bookVersion}}</div>
+            <div class="book-upTime">书籍上架时间：{{content.bookModifytime}}</div>
+            <div class="book-shopName">书籍原价：{{content.bookOriginalprice}}元</div>
+            <div class="price">价格：{{content.bookPrice}}元</div>
         </div>
       </div>
       <div @click="deleteBook" class="delete">
@@ -42,7 +42,7 @@ export default {
   methods:{
     deleteBook(){
       console.log('删除该书籍...')
-      axios.post('/api/ShoppingCar/deleteShoppingCar/'+this.content.bookId+'/'+this.userId)
+      axios.post('/api/shoppingcar/deleteShoppingCar/'+this.content.bookId+'/'+this.userId)
         .then(res =>{
           // this.$router.go(0)
           this.reload()
@@ -54,7 +54,7 @@ export default {
     },
     buyOneBook(){
       console.log('购买该书籍...')
-      axios.post('/api/ShoppingCar/buyThisBook/'+this.content.bookId+'/'+this.userId)
+      axios.post('/api/shoppingcar/buyThisBook/'+this.content.bookId+'/'+this.userId+'/'+this.content.bookPrice)
         .then(res =>{
           this.reload()
           console.log(res.data)
@@ -63,7 +63,7 @@ export default {
         .catch(e => console.log(e))
 
       this.$router.push({
-          name: 'Pay',     //支付页面
+          name: 'BuyerOrder',     //支付页面
          
         })
     }

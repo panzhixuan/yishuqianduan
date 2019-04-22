@@ -19,28 +19,36 @@
       <div style="left: 50px; position: absolute; top: 20px;">个人中心>我的信息</div>
       <el-form ref="form" :model="form" label-width="80px">
 
-        <el-form-item label="学号: " style="width:400px;">
-          <el-input v-model="form.studentId"></el-input>
+        <el-form-item label="邮箱: " style="width:400px;">
+          <el-input v-model="form.userEmail"></el-input>
         </el-form-item>
-        <el-form-item label="姓名:" style="width:400px;">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="用户名:" style="width:400px;">
+          <el-input v-model="form.userName"></el-input>
+        </el-form-item>
+        <el-form-item label="真实姓名:" style="width:400px;">
+          <el-input v-model="form.userRealname"></el-input>
         </el-form-item>
         <el-form-item label="性别:" style="width:400px;">
-            <el-input v-model="form.sex"></el-input>
+            <!-- <el-input v-model="form.userSex"></el-input> -->
+            <el-radio-group v-model="form.userSex" >
+            <el-radio  
+            v-for="(tag,index) of taglist"
+            :key="index" 
+            :label="tag.id"
+            name="type"
+            >{{tag.name}}</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="联系方式:" style="width:400px;">
-            <el-input v-model="form.tel"></el-input>
+            <el-input v-model="form.userTel"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱:" style="width:400px;">
-            <el-input v-model="form.email"></el-input>
-        </el-form-item>
-        <el-form-item label="新密码:" style="width:400px;">
-            <el-input v-model="form.password"></el-input>
+        <el-form-item label="密码:" style="width:400px;">
+            <el-input v-model="form.userPassword"></el-input>
         </el-form-item>
         
         <hr class="inforFoot">
         <el-form-item class="modify-buttons">
-          <el-button type="primary" @click="clickModifyButton">确认修改</el-button>
+          <el-button type="primary" @click="checkemail">确认修改</el-button>
           <el-button @click="cancel">取消</el-button>
         </el-form-item>
 
@@ -61,17 +69,18 @@ export default {
 
         userId:this.$userId,
         editUserInfo:{},
-
+        taglist:
+        [{name:"男",id:0},
+        {name:"女",id:1}],
 
         form: {
           //salerId:'200000000000',
-          studentId:'2016666666',
-          name:'刘益达',
-          sex:'男',
-          tel:'18989600101',
-          email:'174905883768@qq.com',
-          password:'kjab22298y',
-          flag:'未审核'
+          // email:'174905883768@qq.com',
+          // name:'刘益达',
+          // realname: 'pan',
+          // sex:'男',
+          // tel:'18989600101',
+          // password:'kjab22298y',
         }
       }
     },
@@ -113,48 +122,134 @@ export default {
 //           }
         })
     },
+     checkemail(){
+      if(this.form.userName!=''&&this.form.userEmail!=''&&this.form.userPassword!=''&&this.form.userTel!=''&&this.form.userRealname!=''){
+      console.log('获取用户列表中...')
+      axios.get('/api/login/checkemail/'+this.form.userEmail)
+        .then(res =>{
+          console.log('通过邮箱验证')
+          console.log(res.data)
+          if (res.data ==""){
+            console.log('通过邮箱验证')
+            this.checkusername();
+          }
+          else {
+            alert('邮箱已存在')
+          }
+        })
+        .catch(e => {
+          console.log(e)})
+      console.log('获取用户列表完毕')
+      }
+      else if(this.form.userName==''){
+            alert('用户名为空')
+          }
+          else if(this.form.userRealname==''){
+            alert('真实姓名为空')
+          }
+          else if(this.form.userEmail==''){
+            alert('邮箱为空')
+          }
+          else if(this.form.userPassword==''){
+            alert('密码为空')
+          }
+          else if(this.form.userTel==''){
+            alert('联系方式为空')
+          }
+    },
+     checkusername(){
+      console.log('获取用户列表中...')
+      axios.get('/api/login/checkusername/'+this.form.userName)
+        .then(res =>{
+          console.log(res.data)
+          if (res.data == ""){
+            console.log('通过用户名验证')
+            this.checktel();
+          }
+          else {
+            alert('用户名已存在')
+          }
+        })
+        .catch(e => {
+          console.log(e)})
+      console.log('获取用户列表完毕')
+    },
+    checktel(){
+      console.log('获取用户列表中...')
+      axios.get('/api/login/checktel/'+this.form.userTel)
+        .then(res =>{
+          console.log(res.data)
+          if (res.data == ""){
+            console.log('手机号码通过验证')
+            this.clickModifyButton();
+          }
+          else {
+            alert('手机号码已存在')
+          }
+        })
+        .catch(e => {
+          console.log(e)})
+      console.log('获取用户列表完毕')
+    },
       clickModifyButton() {
-        if(this.editUserInfo!=null){
+        // if(this.form.userName!=''&&this.form.userEmail!=''&&this.form.userPassword!=''&&this.form.userTel!=''&&this.form.userRealname!=''){
           console.log('修改个人信息中...')
           axios({
             method: 'post',
-            url: '/api/user/modifyUserInfo',
+            url: '/api/userinfor/modifyUserbyId',
             data: {
               
               userId:this.userId,//获取userId
-              
-              tel:this.form.tel,
-              email:this.form.email,
-              password:this.form.password,
+
+              tel:this.form.userTel,
+              email:this.form.userEmail,
+              password:this.form.userPassword,
+              name:this.form.userName,
+              realname:this.form.userRealname,
+              sex:this.form.userSex
               //uploadTime:this.form.uploadTime,//自动获取系统时间
               
             }
             }).then(res =>{
               console.log(res.data)
+              if(res.data=='Success!'){
+                alert('修改成功！')
+              }
+              else{
+                alert('修改失败')
+              }
             }).catch(e => console.log(e))
           // console.log(this.form)
-          this.$message({
-            type: 'info',
-            message: '成功修改个人信息',
-            duration: 1000
-          }); 
+          // this.$message({
+          //   type: 'info',
+          //   message: '成功修改个人信息',
+          //   duration: 1000
+          // }); 
           console.log('修改个人信息完毕')
-          }
+          // }
+          // else if(this.form.userName==''){
+          //   alert('用户名为空')
+          // }
+          // else if(this.form.userRealname==''){
+          //   alert('真实姓名为空')
+          // }
+          // else if(this.form.userEmail==''){
+          //   alert('邮箱为空')
+          // }
+          // else if(this.form.userPassword==''){
+          //   alert('密码为空')
+          // }
+          // else if(this.form.userTel==''){
+          //   alert('联系方式为空')
+          // }
 
-
-
-        this.$router.push({
-          name: 'PersonalInfor',     //改成个人中心
-         
-        }),
-        console.log('submit!');
       },
       cancel(){
-        this.reload()
+        this.reload()
       },
       getUserInfo:function(){
       console.log('获取个人信息中...')
-      axios.get('/api/user/getUserInfo/'+this.userId)
+      axios.get('/api/userinfor/getUserbyId/'+this.userId)
         .then(res =>{
           console.log(res.data)
           this.form=res.data
