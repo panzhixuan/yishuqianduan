@@ -17,7 +17,7 @@
     </div>
     
     <div>
-      <router-view v-if="isRouterAlive">
+      <router-view>
       </router-view></div>
     <div class="footer"><img src="../../static/bookImg/footer.jpg" ></div>
   </div>
@@ -35,8 +35,7 @@ export default {
     return {
       msg: 'Home',
       userName:'用户名',
-      userId: 0,
-      isRouterAlive: true
+      userId: 0
     }
   },
   components: {
@@ -47,11 +46,6 @@ export default {
     this.$router.push({
           name: '/mainpage'
         })
-  },
-   provide(){
-    return{
-      reload:this.reload
-    }
   },
   methods: {
 //     jumpToSeller(){
@@ -65,12 +59,6 @@ export default {
           path: '/Login'
         })
     },
-    reload(){
-      this.isRouterAlive=false
-      this.$nextTick(()=>{
-        this.isRouterAlive=true
-      })
-    }
   }
 }
 </script>

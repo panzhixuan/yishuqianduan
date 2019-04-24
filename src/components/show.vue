@@ -2,9 +2,9 @@
 <div>
   <ul>
     <li class="book" v-for="book in currentBooks.slice((currentPage-1)*12,currentPage*12)" :key=book>
-      <img :src="book.image" @click="jump(book.bookId, book.salerId)">
-      <h2 class="title">{{book.name}}</h2>
-      <div class="seller">{{book.price}}元</div>
+      <img :src="book.bookImage" @click="jump(book.bookId, book.salerId)">
+      <h2 class="title">{{book.bookName}}</h2>
+      <div class="seller">{{book.bookPrice}}元</div>
     </li>
   </ul>
 </div>
@@ -24,160 +24,8 @@ export default {
         seller: '潘智轩',
         tag: '软件学院',
         option: '大一'
-      },
-      {
-        bookID: '00000000000000000002',
-        imgPath: '../../static/2.jpg',
-        title: 'C++ Primer Plus',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大一'
-      },
-      {
-        bookID: '00000000000000000003',
-        imgPath: '../../static/3.jpg',
-        title: '数字设计和计算机体系结构',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000004',
-        imgPath: '../../static/4.jpg',
-        title: 'UML和模式应用',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000005',
-        imgPath: '../../static/5.jpg',
-        title: '计算机组成与嵌入式系统',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000006',
-        imgPath: '../../static/6.jpg',
-        title: '概率论与数理统计',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000007',
-        imgPath: '../../static/6.jpg',
-        title: '概率论与数理统计',
-        seller: '刘一达',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000008',
-        imgPath: '../../static/5.jpg',
-        title: '计算机组成与嵌入式系统',
-        seller: '刘一达',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000009',
-        imgPath: '../../static/3.jpg',
-        title: '数字设计和计算机体系结构',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000010',
-        imgPath: '../../static/4.jpg',
-        title: 'UML和模式应用',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000011',
-        imgPath: '../../static/5.jpg',
-        title: '计算机组成与嵌入式系统',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000012',
-        imgPath: '../../static/6.jpg',
-        title: '概率论与数理统计',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000013',
-        imgPath: '../../static/6.jpg',
-        title: '概率论与数理统计',
-        seller: '刘一达',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000014',
-        imgPath: '../../static/5.jpg',
-        title: '计算机组成与嵌入式系统',
-        seller: '刘一达',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000015',
-        imgPath: '../../static/3.jpg',
-        title: '数字设计和计算机体系结构',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000016',
-        imgPath: '../../static/4.jpg',
-        title: 'UML和模式应用',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000017',
-        imgPath: '../../static/5.jpg',
-        title: '计算机组成与嵌入式系统',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000018',
-        imgPath: '../../static/6.jpg',
-        title: '概率论与数理统计',
-        seller: '潘智轩',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000019',
-        imgPath: '../../static/6.jpg',
-        title: '概率论与数理统计',
-        seller: '刘一达',
-        tag: '软件学院',
-        option: '大二'
-      },
-      {
-        bookID: '00000000000000000020',
-        imgPath: '../../static/5.jpg',
-        title: '计算机组成与嵌入式系统',
-        seller: '刘一达',
-        tag: '软件学院',
-        option: '大二'
       }
-      ] */
+      */
     }
   },
   props: {
@@ -196,7 +44,7 @@ export default {
       this.$emit('getTotal', arraybook.length)
       return arraybook
     } */
-        tabTypeId: function () {
+    tabTypeId: function () {
       var id = 0
       switch (this.tabs) {
         case '所有书籍':
@@ -214,9 +62,6 @@ export default {
         case '文学类':
           id = 4
           break
-        /*case '环境学院':
-          id = 5
-          break*/
       }
       return id
     }
@@ -225,7 +70,8 @@ export default {
     tabTypeId: function (tabTypeId) {
       if (tabTypeId === 0) {
         this.currentBooks = this.books
-      } else {
+      } 
+      else {
         var arraybook = []
         // alert(this.books)
         for (var i = 0; i < this.books.length; i++) {
@@ -241,8 +87,8 @@ export default {
     }
   },
   methods: {
-    jump: function (id, salerId) {
-      this.$router.push({ path: '/book/' + id + '/' + salerId }, {params: { bookID: id, salerId: salerId }})
+    jump: function (bookId, salerId) {
+      this.$router.push({ path: '/book/' + bookId + '/' + salerId }, {params: { bookId: bookId, salerId: salerId }})
     },
     getBooks: function(){
       axios({
@@ -253,9 +99,46 @@ export default {
         this.currentBooks = res.data
         this.$emit('getTotal', this.currentBooks.length)
       })
+    },
+    getBook: function(){
+      //console.log('haha?')
+      console.log(this.tabTypeId)
+      var str = ''
+      switch (this.tabTypeId) {
+        case 0:
+          str = 'all'
+          break
+        case 1:
+          str = 'science'
+          break
+        case 2:
+          str = 'education'
+          break
+        case 3:
+          str = 'leisure'
+          break
+        case 4:
+          str = 'literature'
+          break
+
+      }
+
+      console.log(str)
+
+      axios({
+        method: 'get',
+        url: '/api/Book/getBook/' + str                  //////这里有点问题
+      }).then(res => {
+        console.log(res)
+        this.books = res.data
+        console.log(this.books)
+        this.currentBooks = res.data
+        //this.$emit('getTotal', this.currentBooks.length)
+      })
     }
   },
   mounted () {
+    //console.log('fuck')
     /*axios({
       method: 'post',
       url: '/api/buy/getBook'
@@ -264,7 +147,8 @@ export default {
       this.currentBooks = res.data
       this.$emit('getTotal', this.currentBooks.length)
     })*/
-    this.getBooks();
+    console.log('get book ')
+    this.getBook();
   }
 }
 </script>

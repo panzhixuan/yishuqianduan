@@ -82,7 +82,7 @@ export default {
         let newBookObject = {
           checked: false,
           name: '123',
-          image: '../static/bookImg/201812171744186.jpg',
+          src: null,
           price: 23.50,
           author: '123',
           version: '第七版',

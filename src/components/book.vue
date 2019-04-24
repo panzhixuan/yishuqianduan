@@ -2,31 +2,31 @@
 <div>
   <div class="book">
     <div class="top">
-      <img :src="book.image">
+      <img :src="this.book.bookImage">
     </div>
     <table class="information"  border="1" cellspacing="0">
       <tr>
         <td style="width:145px;height:42px;">价格:</td>
-        <td style="width:399px;height:42px;"><span style="font-size:20px;color:red;font-weight:bold;">{{ book.price }}元</span><span style="font-size:20px;color:black;font-weight:bold;">/{{book.oPrice}}元</span></td>
+        <td style="width:399px;height:42px;"><span style="font-size:20px;color:red;font-weight:bold;">{{ book.bookPrice }}元</span><span style="font-size:20px;color:black;font-weight:bold;">/{{book.bookOriginalprice}}元</span></td>
       </tr>
       <tr>
         <td style="width:145px;height:42px;">卖家信息:</td>
-        <td style="width:399px;height:42px;">{{saler.name}}的书店</td>
+        <td style="width:399px;height:42px;">{{this.saler.userName}}的书店</td>
       </tr>
       <tr>
         <td style="width:145px;height:42px;">联系方式:</td>
-        <td style="width:399px;height:42px;">{{saler.tel}} {{saler.email}}</td>
+        <td style="width:399px;height:42px;">{{saler.userTel}} {{saler.userEmail}}</td>
       </tr>
     </table>
     <el-button style="position:absolute;float:left;left:750px;top:300px" @click="addShoppingCar">加入购物车</el-button>
     <el-button style="position:absolute;float:left;left:900px;top:300px" @click="buyNow">立即购买</el-button>
     <div class="introduction">
       <hr/>
-      <h2>《{{book.name}}》</h2>
-      <div>{{book.author}}</div>
-      <div>{{book.version}}</div>
+      <h2>{{book.bookName}}</h2>
+      <div>{{book.bookAuthor}}</div>
+      <div>{{book.bookVersion}}</div>
     </div>
-    <div class="comment">
+    <!-- <div class="comment">
       <hr/>
       <table  border="1" cellspacing="0" style="border-color: #DDDDDD;border-collapse: collapse;">
         <tr>
@@ -40,8 +40,8 @@
           <td style="width:345px;height:75px;">{{item.bookId}}<br/>{{item.updateTime}}</td>
         </tr>
       </table>
-    </div>
-    <el-pagination
+    </div> -->
+    <!-- <el-pagination
       class="pagination"
       background
       @current-change="handleCurrentChange"
@@ -50,7 +50,7 @@
       layout="prev, pager, next"
       :total="comments.length"
       >
-    </el-pagination>
+    </el-pagination> -->
   </div>
 </div>
 </template>
@@ -61,7 +61,7 @@ export default {
   data () {
     return {
       currentPage: 1,
-      bookID: this.$route.params.bookID,
+      bookId: this.$route.params.bookID,
       salerId: this.$route.params.salerId,
       book: null,
       saler: null,
@@ -97,30 +97,6 @@ export default {
             time: '2018.09.12'
           }
         },
-        {
-          buyerID: '你的益达',
-          comment: '超级好谢谢智轩！！',
-          order: {
-            book: '工科数学分析',
-            time: '2018.09.12'
-          }
-        },
-        {
-          buyerID: '你的益达',
-          comment: '超级好谢谢智轩！！',
-          order: {
-            book: '工科数学分析',
-            time: '2018.09.12'
-          }
-        },
-        {
-          buyerID: '你的益达',
-          comment: '超级好谢谢智轩！！',
-          order: {
-            book: '工科数学分析',
-            time: '2018.09.12'
-          }
-        }
         ]
       } */
     }
@@ -131,15 +107,17 @@ export default {
       console.log(this.currentPage)
     },
     addShoppingCar: function () {
+      console.log(this.userId)
+      console.log(this.bookId)
       axios({
         method: 'post',
-        url: '/api/buy/addShoppingCar',
+        url: '/api/shoppingcar/insertShoppingCar',
         data: {
           userId: this.userId,
-          bookId: this.bookID,
-          price: this.book.price
+          bookId: this.bookId,
         }
       }).then(res => {
+        console.log('now add to shopping car')
         console.log(res.data)
       }).catch(e => console.log(e))
       alert('已加入购物车')
@@ -167,6 +145,27 @@ export default {
     
   },
   mounted () {
+    console.log('trying to get book by id')
+    //console.log(this.$route.params)
+    //console.log(this.$route.params.bookID)
+    axios({
+      method: 'get',
+      url: 'api/Book/getBookById/' + this.bookId
+    }).then(res => {
+      this.book = res.data
+      //console.log('getBookById')
+      console.log(this.book)
+      
+      axios( {
+        method: 'get',
+        url: 'api/userinfor/getUserbyId/' + this.salerId
+      }).then(res => {
+        this.saler = res.data
+        console.log('here is saler information')
+        console.log(this.saler)
+      })
+
+    })
     // axios({
     //   method: 'get',
     //   url: '/api/buy/book/' + this.bookID
