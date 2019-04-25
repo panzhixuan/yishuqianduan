@@ -29,12 +29,13 @@ export default {
     deleteBook(){
       console.log(this.deletelist)
       console.log('下架书籍列表中...')
-      axios.post('/api/sell/deleteSalerBooks/'+this.deletelist)
+      axios.get('/api/sell/deleteSalerBooks/'+this.deletelist)
         .then(res =>{
           console.log(res.data)
           this.reload()
-        })
-        .catch(e => console.log(e))
+        }).then(res =>{
+                this.reload()
+              }).catch(e => console.log(e))    
       console.log('下架书籍完毕')
       // this.$router.go(0)
     }

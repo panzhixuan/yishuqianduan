@@ -34,7 +34,7 @@
           <el-upload
             class="avatar-uploader"
             ref="upload"
-            action="/api/upload.do"
+            action="/api/upload"
             name="picture"
             list-type="picture-card"
             :limit="1"
@@ -212,6 +212,7 @@ export default {
               typeId:this.form.booktypeId
             }
             }).then(res =>{
+               this.$router.go(-1)
               console.log(res.data)
             }).catch(e => console.log(e))
           // console.log(this.form)
@@ -221,7 +222,8 @@ export default {
             duration: 1000
           }); 
           console.log('修改书籍完毕')
-          }else{
+          }else
+          {
             console.log('上传书籍中...')
             axios({
               method: 'post',

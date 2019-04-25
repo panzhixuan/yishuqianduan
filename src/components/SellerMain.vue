@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted:function(){
-    this.booklist=this.init()
+    // this.booklist=this.init()
     // let dBookList=this.init()
     // this.mock.onGet('/api/book/getAllSellerBooks').reply(req => {
     //   return [200,{
@@ -66,6 +66,8 @@ export default {
     // })
     // 获取书籍列表
     // this.getAllSellerBooks()
+    this.getBookBySalerId()
+
   },
   methods:{
     handleSizeChange: function (size) {
@@ -82,7 +84,7 @@ export default {
         let newBookObject = {
           checked: false,
           name: '123',
-          image: '../static/bookImg/201812171744186.jpg',
+          src: null,
           price: 23.50,
           author: '123',
           version: '第七版',
@@ -120,6 +122,21 @@ export default {
         .catch(e => console.log(e))
       console.log(this.booklist)
       console.log('获取图书列表完毕')
+    },
+    getBookBySalerId: function(){
+      //console.log('haha?')
+      console.log(this.salerId)
+      var str = this.salerId
+      console.log(str)
+      axios({
+        method: 'get',
+        url: '/api/Book/getBookBySalerId/' + str               
+      }).then(res => {
+        console.log(res)
+        this.booklist = res.data
+        console.log(this.booklist)
+        //this.$emit('getTotal', this.currentBooks.length)
+      })
     }
   }
 }
