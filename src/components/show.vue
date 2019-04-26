@@ -16,7 +16,7 @@ export default {
   data () {
     return {
       books: null,
-      currentBooks: null
+      currentBooks: null,
       /*books: [{
         bookID: '00000000000000000001',
         imgPath: '../../static/1.jpg',
@@ -101,7 +101,7 @@ export default {
       })
     },
     getBook: function(){
-      //console.log('haha?')
+      console.log('haha?')
       console.log(this.tabTypeId)
       var str = ''
       switch (this.tabTypeId) {
@@ -135,6 +135,9 @@ export default {
     }
   },
   mounted () {
+    console.log('now trying to get tabTypeId')
+    console.log(this.tabs)
+
     //console.log('fuck')
     /*axios({
       method: 'post',
@@ -144,7 +147,7 @@ export default {
       this.currentBooks = res.data
       this.$emit('getTotal', this.currentBooks.length)
     })*/
-    console.log('get book ')
+    //console.log('get the book ')
     this.getBook();
   }
 }

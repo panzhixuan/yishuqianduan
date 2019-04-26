@@ -129,7 +129,7 @@ export default {
         .then(res =>{
           console.log('通过邮箱验证')
           console.log(res.data)
-          if (res.data ==""){
+          if (res.data ==""||res.data.userEmail==this.form.userEmail){
             console.log('通过邮箱验证')
             this.checkusername();
           }
@@ -162,7 +162,7 @@ export default {
       axios.get('/api/login/checkusername/'+this.form.userName)
         .then(res =>{
           console.log(res.data)
-          if (res.data == ""){
+          if (res.data == ""||res.data.userName==this.form.userName){
             console.log('通过用户名验证')
             this.checktel();
           }
@@ -179,7 +179,7 @@ export default {
       axios.get('/api/login/checktel/'+this.form.userTel)
         .then(res =>{
           console.log(res.data)
-          if (res.data == ""){
+          if (res.data == ""||res.data.userTel==this.form.userTel){
             console.log('手机号码通过验证')
             this.clickModifyButton();
           }

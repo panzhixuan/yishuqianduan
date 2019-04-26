@@ -3,7 +3,7 @@
   <el-tabs v-model="activeName" type="card" style=" margin-left: 100px; margin-top: 70px; margin-right: 50px; z-index: 1000;">
     <el-tab-pane label="搜索结果" name="搜索结果"></el-tab-pane>
   </el-tabs>
-  <ul>
+  <ul v-if="this.currentBooks.bookId!=null">
     <li class="book">
       <img :src="currentBooks.bookImage" @click="jump(currentBooks.bookId, currentBooks.salerId)"/>
       <h2 class="title">{{currentBooks.bookName}}</h2>
