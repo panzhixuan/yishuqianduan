@@ -21,21 +21,21 @@
             <el-table :data="orderList" style="width: 75%;overflow: auto;" :height="clientHeight" stripe border highlight-current-row v-loading="pageLoading">
               <!-- <el-table-column prop="checked" width="50" type="selection" @selection-change="changeFun"></el-table-column> -->
               <el-table-column prop="orderId" width="60" label="订单"></el-table-column>
-              <el-table-column prop="datetime" width="200" label="订单日期"></el-table-column>
+              <el-table-column prop="orderTime" width="200" label="订单日期"></el-table-column>
               <el-table-column prop="buyerId" width="60" label="买家"></el-table-column>
               <el-table-column prop="bookId" width="80" label="书籍ID"></el-table-column>
-              <el-table-column prop="price"  width="60" label="价格"></el-table-column>
-              <el-table-column prop="flag"  width="143" label="状态">
+              <el-table-column prop="orderPrice"  width="60" label="价格"></el-table-column>
+              <el-table-column prop="orderFlag"  width="143" label="状态">
                 <template slot-scope="scope">
-                <div class="status" v-if="scope.row.flag===0">未支付</div>
-                <div class="status" v-if="scope.row.flag===1">已支付</div>
-                <div class="status" v-if="scope.row.flag===2">退货中</div>
-                <div class="status" v-if="scope.row.flag===3">已退货</div>
+                <div class="status" v-if="scope.row.orderFlag===0">未支付</div>
+                <div class="status" v-if="scope.row.orderFlag===1">已支付</div>
+                <div class="status" v-if="scope.row.orderFlag===2">退货中</div>
+                <div class="status" v-if="scope.row.orderFlag===3">已退货</div>
                 </template>
               </el-table-column>
               <el-table-column prop="operation" width="220" label="操作">
                 <template slot-scope="scope">
-                <el-button class="oflag" type="info" @click="setOrderFlagF(scope.row.orderId)" v-if="scope.row.flag===2">退货完成</el-button><el-button  type="info" @click="deleteOrder(scope.row.orderId)" v-on:click="confirm">删除</el-button>
+                <el-button class="oflag" type="info" @click="setOrderFlagF(scope.row.bookId)" v-if="scope.row.orderFlag===2">退货完成</el-button><el-button  type="info" @click="deleteOrder(scope.row.orderId)" v-on:click="confirm" v-if="scope.row.orderFlag!==2">删除</el-button>
                  <!-- v-on:click="changeButton" -->
                 </template>
               </el-table-column>
@@ -153,7 +153,7 @@ export default {
     },*/
     deleteOrder:function(val){
       let self = this;
-        axios.post('/api/salerorder/deleteOrder/'+val)
+        axios.get('/api/salerorder/deleteOrder/'+val)
         .then(
           console.log('更新成功')
         )
@@ -163,7 +163,7 @@ export default {
     },
     findAllBySalerId:function(){
       console.log('获取出售订单列表中...')
-      axios.get('/api/salerorder/findAllBySalerId/'+this.userId)
+      axios.get('/api/salerorder/findAllSalerOrder/'+this.userId)
         .then(res =>{
           console.log(res.data)
           this.orderList=res.data
@@ -189,7 +189,6 @@ export default {
         )
         .catch(e => console.log(e))
       console.log('更新完毕')
-      this.oflag = '已经退货'
       this.reload()
      // this.$router.go(0)
     }

@@ -15,7 +15,6 @@
     <el-tab-pane label="教育类" name="教育类"><show :tabs="activeName" @getTotal= "getTo" :currentPage="currentPage"></show></el-tab-pane>
     <el-tab-pane label="休闲类" name="休闲类"><show :tabs="activeName" @getTotal= "getTo" :currentPage="currentPage"></show></el-tab-pane>
     <el-tab-pane label="文学类" name="文学类"><show :tabs="activeName" @getTotal= "getTo" :currentPage="currentPage"></show></el-tab-pane>
-    <!-- <el-tab-pane label="环境学院" name="环境学院"><show :tabs="activeName" @getTotal= "getTo" :currentPage="currentPage"></show></el-tab-pane> -->
   </el-tabs>
 <el-pagination
   class="pagination"
@@ -38,12 +37,12 @@ export default {
     show
   },
   mounted(){
+    //console.log('fuck')
     this.activeName=this.$route.query.tag
     if(this.$route.query.tag==undefined){
       this.activeName='所有书籍'
     }
   },
-
   data () {
     return {
       currentPage: 1,
@@ -65,14 +64,13 @@ export default {
       console.log(this.currentPage)
     },
     search () {
-      this.$router.push({ path: 'result/' + this.input }, {params: { keyword: this.input }})
+      this.$router.push({ path: '/result/' + this.input }, {params: { keyword: this.input }})
     }
   }
 }
 </script>
 
 <style scoped>
-
 .pagination {
   position: absolute;
   top: 1400px;

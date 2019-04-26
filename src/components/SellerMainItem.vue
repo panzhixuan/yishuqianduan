@@ -2,21 +2,21 @@
   <div class="seller-main-item">
       <!-- <hr > -->
       <div class="container">
-        <img :src="content.image">
+        <img :src="content.bookImage">
         <div class="check-name">
           <div class="name">
-            <el-checkbox class="check-box" :label="content.bookId" v-model="temp">{{content.name}}</el-checkbox>
+            <el-checkbox class="check-box" :label="content.bookId" v-model="temp">{{content.bookName}}</el-checkbox>
             <!-- v-model="content.checked" -->
           </div>
         <div class="details">
-            <div class="book-author">作者：{{content.author}}</div>
-            <div class="book-version">版次：{{content.version}}</div>
-            <div class="book-upTime">上架时间：{{content.uploadTime}}</div>
-            <div class="book-flag" v-if="content.flag===0">书籍状态：未审核</div>
-            <div class="book-flag" v-if="content.flag===1">书籍状态：审核通过</div>
-            <div class="book-flag" v-if="content.flag===2">书籍状态：审核未通过</div>
-            <div class="book-flag" v-if="content.flag===3">已售出</div>
-            <div class="price">价格：{{content.price}}元</div>
+            <div class="book-author">作者：{{content.bookAuthor}}</div>
+            <div class="book-version">版次：{{content.bookVersion}}</div>
+            <div class="book-upTime">上架时间：{{content.bookModifytime}}</div>
+            <div class="book-flag" v-if="content.bookFlag===0">书籍状态：未审核</div>
+            <div class="book-flag" v-if="content.bookFlag===1">书籍状态：审核通过</div>
+            <div class="book-flag" v-if="content.bookFlag===2">书籍状态：审核未通过</div>
+            <div class="book-flag" v-if="content.bookFlag===3">已售出</div>
+            <div class="price">价格：{{content.bookPrice}}元</div>
         </div>
       </div>
       <div @click="jumpToEditBook" class="edit">
@@ -38,7 +38,8 @@ export default {
   },
   watch: {
     temp(nval,oval) {
-      // console.log(this.deletelist)
+      //console.log(this.deletelist)
+      //console.log(this.temp)
       // console.log(oval)
       // console.log(nval)
       if(nval.length>0){

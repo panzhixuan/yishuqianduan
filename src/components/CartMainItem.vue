@@ -2,7 +2,7 @@
   <div class="cart-main-item">
       <!-- <hr > -->
       <div class="container">
-        <img :src="content.image">
+        <img :src="content.bookImage">
         <div class="check-name">
           <div class="name">
             <el-checkbox class="check-box" v-model="content.checked" :label="content.bookName"  ></el-checkbox>

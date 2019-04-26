@@ -34,7 +34,7 @@
           <el-upload
             class="avatar-uploader"
             ref="upload"
-            action="/api/upload.do"
+            action="/api/upload"
             name="picture"
             list-type="picture-card"
             :limit="1"
@@ -111,7 +111,17 @@ export default {
       this.editBook=this.$route.params.editBook
       if(this.editBook!=null){
         console.log("正在修改："+this.editBook.bookId)
-        this.form=this.editBook
+        // this.form.name=this.editBook
+        this.form.bookId=this.editBook.bookId,
+        this.form.name=this.editBook.bookName,
+        this.form.image=this.editBook.bookImage,
+        this.form.author=this.editBook.bookAuthor,
+        this.form.version=this.editBook.bookVersion,
+        this.form.price=this.editBook.bookPrice,
+        this.form.oPrice=this.editBook.bookOriginalprice,
+        this.form.booktypeId=this.editBook.bookType
+        this.form.salerId=this.editBook.salerId,
+        this.form.uploadTime=this.editBook.bookModifytime
       }else{
         console.log("未传递出要修改的book")
       }
@@ -212,6 +222,7 @@ export default {
               typeId:this.form.booktypeId
             }
             }).then(res =>{
+               this.$router.go(-1)
               console.log(res.data)
             }).catch(e => console.log(e))
           // console.log(this.form)
@@ -220,8 +231,19 @@ export default {
             message: '成功修改书籍信息',
             duration: 1000
           }); 
+          console.log(this.form.bookId)
+          console.log(this.form.name)
+          console.log(this.form.image)
+          console.log(this.form.author)
+          console.log(this.form.version)
+          console.log(this.form.price)
+          console.log(this.form.oPrice)
+          console.log(this.form.uploadTime)
+          console.log(this.form.flag)
+          console.log(this.form.booktypeId)
           console.log('修改书籍完毕')
-          }else{
+          }else
+          {
             console.log('上传书籍中...')
             axios({
               method: 'post',

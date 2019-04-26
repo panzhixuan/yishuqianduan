@@ -4,10 +4,10 @@
     <el-tab-pane label="搜索结果" name="搜索结果"></el-tab-pane>
   </el-tabs>
   <ul>
-    <li class="book" v-for="book in currentBooks.slice((currentPage-1)*12,currentPage*12)" :key=book>
-      <img :src="book.image" @click="jump(book.bookId, book.salerId)">
-      <h2 class="title">{{book.name}}</h2>
-      <div class="seller">{{book.price}}元</div>
+    <li class="book">
+      <img :src="currentBooks.bookImage" @click="jump(currentBooks.bookId, currentBooks.salerId)"/>
+      <h2 class="title">{{currentBooks.bookName}}</h2>
+      <div class="seller">{{currentBooks.bookPrice}}元</div>
     </li>
   </ul>
 </div>
@@ -27,9 +27,12 @@ export default {
   mounted () {
     axios({
       method: 'get',
-      url: '/api/buy/result/' + this.input
+      url: '/api/Book/getBookByName/' + this.input
     }).then(res => {
-      this.currentBooks = res.data
+      console.log(res.data);
+      
+      this.currentBooks = res.data;
+      console.log(this.currentBooks)
     })
   },
   methods: {
